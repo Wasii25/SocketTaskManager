@@ -27,18 +27,12 @@ public class GreetClient {
         out.close();
         clientSocket.close();
     }
-    @Test
-    public void givenGreetingClient_whenServerRespondsWhenStarted_thenCorrect() throws IOException {
+   public static void main(String[] args) throws IOException {
         GreetClient client = new GreetClient();
-        client.startConnection("127.0.0.1", 4444);
-        String resp1 = client.sendMessage("hello");
-        String resp2 = client.sendMessage("world");
-        String resp3 = client.sendMessage("!");
-        String resp4 = client.sendMessage(".");
+        client.startConnection("127.0.0.1", 9000);
+        System.out.println("Client connected");
+        String response = client.sendMessage("hello server");
+        System.out.println("server says"+ response);
+   }
 
-        assertEquals("hello", resp1);
-        assertEquals("world", resp2);
-        assertEquals("!", resp3);
-        assertEquals("good bye", resp4);
-    }
 }
