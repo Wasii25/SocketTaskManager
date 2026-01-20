@@ -35,6 +35,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return id + ". " + title + "[" + status + "]";
+        return id + ". " + title + " [" + status + "]";
     }
 }

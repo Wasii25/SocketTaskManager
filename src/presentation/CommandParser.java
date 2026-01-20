@@ -1,25 +1,14 @@
 package presentation;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//This class is solely to parse the command given by the user
 
 public class CommandParser {
 
-    public String parseCommand(String userCommand) {
-        List<String> parts = Arrays.stream(userCommand.trim().split("\\s+"))
-                .toList();
-        String command = parts.getFirst();
-        String argument = parts.size() > 1 ? parts.get(1) : "";
+    public ParsedCommand parse(String userCommand) {
+        String[] parts = userCommand.trim().split("\\s+", 2);
 
-        String availableCommands = "\"Available commands: LOGIN <username>, LOGOUT, CREATE_TASK <title>, LIST_TASKS, HELP, QUIT\"";
-        return switch (command.toLowerCase()) {
-            case "help" ->availableCommands ;
-            case "login" ->  parts.size() > 1 ? "logged in as " + parts.get(1) : "ERROR: Login requires username";
-            case "logout" -> "logged out";
-            case "list_tasks" -> "no tasks yet";
-            case "quit" -> null;
-            default -> "invalid command";
-        };
+        String command = parts[0].toLowerCase();
+        String argument = parts.length > 1 ? parts[1] : "";
+
+        return new ParsedCommand(command, argument);
     }
 }
