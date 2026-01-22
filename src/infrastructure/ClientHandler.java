@@ -22,6 +22,8 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Client connected from " + clientSocket.getRemoteSocketAddress());
+
         try (
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(clientSocket.getInputStream()));
@@ -34,6 +36,7 @@ public class ClientHandler implements Runnable {
 
                 if (inputLine.equalsIgnoreCase("quit")) {
                     out.println("Goodbye");
+                    System.out.println("Client disconnected");
                     break;
                 }
 
