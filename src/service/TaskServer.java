@@ -2,37 +2,29 @@ package service;
 
 import domain.Task;
 import domain.UserSession;
+import repository.TaskRepository;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskServer {
-    private ConcurrentHashMap<Integer, Task> tasks = new ConcurrentHashMap<>();
+    private final TaskRepository repository;
     private AtomicInteger taskIdGenerator = new AtomicInteger(1);
+    public TaskServer(TaskRepository repository) {
+        this.repository = repository;
+    }
 
     public Task createTask(String title, String username) {
-        int nextId = taskIdGenerator.getAndIncrement();
-        Task task = new Task(nextId, title, username);
-        tasks.put(nextId, task);
-        return task;
+        int id = taskIdGenerator.getAndIncrement();
+        Task task = new Task(id, title, username);
+        return repository.save(task);
     }
 
-
-    public Collection<Task> getVisibleTasksFor(String username) {
-        return tasks.values()
-                .stream()
-                .filter(task ->
-                        task.getCreatedBy().equals(username) ||
-                                (task.getAssignedTo() != null &&
-                                        task.getAssignedTo().equals(username))
-                )
-                .toList();
+    public List<Task> getVisibleTasksFor(String username) {
+        return repository.findVisibleTasksFor(username);
     }
 
-
-    public Collection<Task> getAllTasks() {
-        return tasks.values();
-    }
 }

@@ -36,12 +36,21 @@ public class CommandExecutor {
             }
 
             case "create_task" -> {
+                if (!session.isLoggedIn()) {
+                    yield "ERROR: Please login first";
+                }
                 if (cmd.argument.isEmpty()) {
                     yield "ERROR: CREATE_TASK requires a title";
                 }
-                var task = taskServer.createTask(cmd.argument, session.getUsername());
+
+                var task = taskServer.createTask(
+                        cmd.argument,
+                        session.getUsername()
+                );
+
                 yield "Task created: #" + task.getId() + " " + task.getTitle();
             }
+
 
             case "list_tasks" -> {
                 if (!session.isLoggedIn()) {
