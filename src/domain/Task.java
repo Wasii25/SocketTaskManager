@@ -4,15 +4,25 @@ public class Task {
     private int id;
     private String title;
     private TaskStatus status;
-    private String createdBy = null;
-    private String assignedTo = null;
+    private String createdBy ;
+    private String assignedTo;
     private TaskStatus taskStatus;
 
-    public Task(int id, String title) {
+    public Task(int id, String title, String createdBy) {
         this.id = id;
         this.title = title;
         this.status = TaskStatus.OPEN;
+        this.createdBy = createdBy;
     }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public String getAssignedTo() {
+        return assignedTo;
+    }
+
 
     public int getId() {
         return id;

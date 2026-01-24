@@ -1,4 +1,5 @@
 import domain.Task;
+import domain.UserSession;
 import infrastructure.ServerSocketManager;
 import presentation.CommandParser;
 import service.TaskServer;

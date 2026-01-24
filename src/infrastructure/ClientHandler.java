@@ -1,5 +1,6 @@
 package infrastructure;
 
+import domain.UserSession;
 import presentation.CommandParser;
 import service.CommandExecutor;
 import presentation.ParsedCommand;
@@ -13,6 +14,7 @@ public class ClientHandler implements Runnable {
     private final Socket clientSocket;
     private final CommandParser parser;
     private final CommandExecutor executor;
+    private UserSession session = new UserSession();
 
     public ClientHandler(Socket clientSocket, TaskServer taskServer) {
         this.clientSocket = clientSocket;
@@ -41,7 +43,7 @@ public class ClientHandler implements Runnable {
                 }
 
                 ParsedCommand command = parser.parse(inputLine);
-                String response = executor.execute(command);
+                String response = executor.execute(command, session);
 
                 out.println(response);
             }
